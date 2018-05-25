@@ -265,7 +265,24 @@ public class LuceneJsonConverter
                 || obj instanceof String);
     }
 
-
+    
+    /** Comments about this class */
+    private JsonArray editListBill(JsonArray jarray, Object o, Collection<?> c){
+        
+        Collection<Person> coll =c;
+        Collection<Vote> coll1 = c;
+        if(o instanceof Person) {
+            for(Person p: coll) {
+                jarray.add(converter(p, null));
+            }
+        }
+        else if(o instanceof Vote) {
+            for(Vote v: coll1) {
+                jarray.add((converter(v, internal_vote_exclude())));
+            }
+        }
+        return jarray;
+    }
 
 
 /** Comments about this class */
