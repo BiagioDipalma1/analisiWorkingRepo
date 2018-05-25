@@ -1,4 +1,4 @@
-package gov.nysenate.openleg.converter;
+ package gov.nysenate.openleg.converter;
 
 
 import gov.nysenate.openleg.model.Action;
@@ -33,6 +33,21 @@ import org.apache.log4j.Logger;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+
+
+
+
+
+
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.Month;
+
+import java.time.temporal.ChronoUnit;
 // Richiede commento
 
 /**
@@ -45,9 +60,12 @@ import com.google.gson.JsonPrimitive;
 @SuppressWarnings("unchecked")
 public class LuceneJsonConverter
 {
+    /**
+       * Comments about this class
+       */
     public static final Logger logger = Logger.getLogger(LuceneJsonConverter.class);
     protected static HashMap<String,JsonObject> cachedSimpleBills = new HashMap<String,JsonObject>();
-    protected static DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    LocalDateTime date2= LocalDateTime.now();
 /** Comments about this class */
     private JsonObject editNode(JsonObject node, BaseObject o){
         
@@ -247,186 +265,16 @@ public class LuceneJsonConverter
                 || obj instanceof String);
     }
 
-    /**
-     * The following methods that begin with "list"+<object type> all handle particular
-     * list fields where special formatting or output is necessary.  In some cases
-     * they loop back to converter, in other cases they are simply iterated through and
-     * returned.
-     */
-    @SuppressWarnings("unused")
-    private static JsonArray listBill(Collection<?> c) throws Exception
-    {
-        JsonArray jarray = new JsonArray();
-        Collection<Bill> coll = c;
-        Collection<Action> coll1 = c;
-        if(c.iterator().hasNext()) {
-            Object o = c.iterator().next();
-            if(o instanceof Bill) {
-                for(Bill bill: coll) {
-                    jarray.add(converter(bill, null));
-                }
-            }
-            else if(o instanceof Action) {
-                for(Action be:coll1) {
-                    jarray.add(converter(be, internal_action_exclude()));
-                }
-            }
-            else{
-                jarray = editListBill(jarray, o, c);
-            }
-        }
-        return jarray;
-    }
-    /** Comments about this class */
-    private JsonArray editListBill(JsonArray jarray, Object o, Collection<?> c){
-        
-        Collection<Person> coll =c;
-        Collection<Vote> coll1 = c;
-        if(o instanceof Person) {
-            for(Person p: coll) {
-                jarray.add(converter(p, null));
-            }
-        }
-        else if(o instanceof Vote) {
-            for(Vote v: coll1) {
-                jarray.add((converter(v, internal_vote_exclude())));
-            }
-        }
-        return jarray;
-    }
-/** Comments about this class */
-    @SuppressWarnings("unused")
-    private static JsonArray listSupplemental(Collection<?> c) throws Exception
-    {
-        Collection<Section> coll1 = c;
-        Collection<Sequence> coll2 = c;
-        JsonArray jarray = new JsonArray();
-        if(c.iterator().hasNext()) {
-            Object o = c.iterator().next();
-            if(o instanceof Section) {
-                for(Section s:coll1) {
-                    jarray.add(converter(s, section_exclude()));
-                }
-            }
-            else if(o instanceof Sequence) {
-                for(Sequence s:coll2) {
-                    jarray.add(converter(s, sequence_exclude()));
 
-                }
-            }
-        }
-        return jarray;
-    }
-/** Comments about this class */
-    @SuppressWarnings("unused")
-    private static JsonArray listCalendar(Collection<?> c) throws Exception
-    {
-        Collection<Supplemental> coll = c;
-        JsonArray jarray = new JsonArray();
-        if(c.iterator().hasNext()) {
-            Object o = c.iterator().next();
-            if(o instanceof Supplemental) {
-                for(Supplemental s:coll) {
-                    jarray.add(converter(s, supplemental_exclude()));
-                }
-            }
-        }
-        return jarray;
-    }
-/** Comments about this class */
-    @SuppressWarnings("unused")
-    private static JsonArray listMeeting(Collection<?> c) throws Exception
-    {
-        Collection <Bill> coll = c;
-        Collection <Addendum> coll1 = c;
-        JsonArray jarray = new JsonArray();
-        if(c.iterator().hasNext()) {
-            Object o = c.iterator().next();
-            if(o instanceof Bill) {
-                for(Bill b:coll) {
-                    jarray.add(converter(b,internal_bill_exclude()));
-                }
-            }
-            else if (o instanceof Addendum) {
-                for(Addendum a:coll1) {
-                    jarray.add(converter(a,addendum_exclude()));
-                }
-            }
-        }
-        return jarray;
-    }
-/** Comments about this class */
-    @SuppressWarnings("unused")
-    private static JsonArray listSection(Collection<?> c) throws Exception
-    {
-        Collection <CalendarEntry> coll = c;
-        JsonArray jarray = new JsonArray();
-        if(c.iterator().hasNext()) {
-            Object o = c.iterator().next();
-            if(o instanceof CalendarEntry) {
-                for(CalendarEntry entry:coll) {
-                    jarray.add(converter(entry,calendar_entry_exclude()));
-                }
-            }
-        }
-        return jarray;
-    }
-/** Comments about this class */
-    @SuppressWarnings("unused")
-    private static JsonArray listSequence(Collection<?> c) throws Exception
-    {
-        Collection <CalendarEntry> coll = c;
-        JsonArray jarray = new JsonArray();
-        if(c.iterator().hasNext()) {
-            Object o = c.iterator().next();
-            if(o instanceof CalendarEntry) {
-                for(CalendarEntry entry:coll) {
-                    jarray.add(converter(entry,calendar_entry_exclude()));
-                }
-            }
-        }
-        return jarray;
-    }
-/** Comments about this class */
-    private static List<String> addendum_exclude()
-    {
-        return Arrays.asList("meetings");
-    }
+
+
 /** Comments about this class */
     private static List<String> agenda_exclude()
     {
         return Arrays.asList("addendums");
     }
-/** Comments about this class */
-    private static List<String> supplemental_exclude()
-    {
-        return Arrays.asList("calendar");
-    }
-/** Comments about this class */
-    private static List<String> section_exclude()
-    {
-        return Arrays.asList("supplemental");
-    }
-/** Comments about this class */
-    private static List<String> sequence_exclude()
-    {
-        return Arrays.asList("supplemental");
-    }
-/** Comments about this class */
-    private static List<String> calendar_entry_exclude()
-    {
-        return Arrays.asList("section", "sequence");
-    }
-/** Comments about this class */
-    private static List<String> internal_vote_exclude()
-    {
-        return Arrays.asList("bill");
-    }
-/** Comments about this class */
-    private static List<String> internal_action_exclude()
-    {
-        return Arrays.asList("bill");
-    }
+
+
 /** Comments about this class */
     private static List<String> internal_bill_exclude()
     {
