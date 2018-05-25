@@ -160,13 +160,6 @@ public class Bill extends BaseObject implements Comparable<Bill>
         return billId;
     }
 
-    /**
-     * @param billId - The new bill id.
-     */
-    private void setBillId(String billId)
-    {
-        this.billId = billId;
-    }
 
     /**
      * The object type of the bill.

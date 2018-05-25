@@ -63,22 +63,7 @@ public class ReportReader extends CouchSupport {
     public static final String HELP = "help";
 
     
-   
-    /** Comments about this class */
-     private  static ReportType ifFile(ReportType reportType, String fileType) throws org.apache.commons.cli.ParseException{
-        
-        if(fileType.equalsIgnoreCase("bill_html"))
-                        reportType = ReportType.BILL_HTML;
-                    else if(fileType.equalsIgnoreCase("memo"))
-                        reportType = ReportType.MEMO;
-                    else if(fileType.equalsIgnoreCase("paging"))
-                        reportType = ReportType.PAGING;
 
-                    if(reportType==null)
-                        throw new org.apache.commons.cli.ParseException("invalid file type: " + fileType);
-
-         return reportType;
-    }
      
     /*
      * report files come in three flavors:

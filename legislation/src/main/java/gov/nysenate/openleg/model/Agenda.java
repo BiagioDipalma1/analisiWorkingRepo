@@ -52,13 +52,6 @@ public class Agenda extends BaseObject
         return this.oid;
     }
 
-    /**
-     * @param oid - The new object id.
-     */
-    private void setOid(String oid)
-    {
-        this.oid = oid;
-    }
 
     /**
      * @return - The agenda number.
@@ -68,13 +61,6 @@ public class Agenda extends BaseObject
         return number;
     }
 
-    /**
-     * @param number - The new agenda number.
-     */
-   private void setNumber(int number)
-    {
-        this.number = number;
-    }
 
     /**
      * @return - The list of addendum.

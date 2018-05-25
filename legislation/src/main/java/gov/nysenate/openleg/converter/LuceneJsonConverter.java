@@ -284,46 +284,19 @@ public class LuceneJsonConverter
         return jarray;
     }
 
-/** Comments about this class */
-    private static List<String> addendum_exclude()
-    {
-        return Arrays.asList("meetings");
-    }
+
 /** Comments about this class */
     private static List<String> agenda_exclude()
     {
         return Arrays.asList("addendums");
     }
-/** Comments about this class */
-    private static List<String> supplemental_exclude()
-    {
-        return Arrays.asList("calendar");
-    }
-/** Comments about this class */
-    private static List<String> section_exclude()
-    {
-        return Arrays.asList("supplemental");
-    }
-/** Comments about this class */
-    private static List<String> sequence_exclude()
-    {
-        return Arrays.asList("supplemental");
-    }
-/** Comments about this class */
-    private static List<String> calendar_entry_exclude()
-    {
-        return Arrays.asList("section", "sequence");
-    }
+
 /** Comments about this class */
     private static List<String> internal_vote_exclude()
     {
         return Arrays.asList("bill");
     }
-/** Comments about this class */
-    private static List<String> internal_action_exclude()
-    {
-        return Arrays.asList("bill");
-    }
+
 /** Comments about this class */
     private static List<String> internal_bill_exclude()
     {
