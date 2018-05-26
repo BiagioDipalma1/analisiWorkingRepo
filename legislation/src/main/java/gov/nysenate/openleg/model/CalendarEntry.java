@@ -232,11 +232,10 @@ public class CalendarEntry
        */
         public int value;
         public boolean equals (Object o) {
-          if (this.getClass () != o.getClass ()
-          )  {  
-             return false; }
+          if (o instanceof CalendarEntry){  
+             return true; }
          else {
-           return true; 
+           return false; 
          }
         }
       @Override

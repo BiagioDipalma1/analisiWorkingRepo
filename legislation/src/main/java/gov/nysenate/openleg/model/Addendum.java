@@ -172,11 +172,10 @@ public class Addendum extends BaseObject
        */
         public int value;
         public boolean equals (Object o) {
-          if (this.getClass () != o.getClass ()
-          )  {  
-             return false; }
+          if (o instanceof Addendum){  
+             return true; }
          else {
-           return true; 
+           return false; 
          }
         }
     @Override  

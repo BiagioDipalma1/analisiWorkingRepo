@@ -210,13 +210,13 @@ public class Calendar extends BaseObject
        */
         public int value;
         public boolean equals (Object o) {
-          if (this.getClass () != o.getClass ()
-          )  { 
-             return false; }
+          if (o instanceof Calendar)  { 
+             return true; }
          else {
-           return true; 
+           return false; 
          }
         }
+        
       @Override
     public int hashCode() {
         return value;

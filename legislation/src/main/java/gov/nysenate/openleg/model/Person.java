@@ -91,11 +91,10 @@ public class Person {
        */
         public int value;
         public boolean equals (Object o) {
-          if (this.getClass () != o.getClass ()
-          )  { 
-             return false; }
+          if (o instanceof Person){ 
+             return true; }
          else {
-           return true; 
+           return false; 
          }
         }
       @Override

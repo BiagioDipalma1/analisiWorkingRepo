@@ -612,10 +612,11 @@ public class Bill extends BaseObject implements Comparable<Bill>
        */
        public int value;
         public boolean equals (Object o) {
-          if (o instanceof Bill){ 
-             return true; }
+          if (this.getClass () != o.getClass ()
+          )  { 
+             return false; }
          else {
-           return false;  
+           return true;  
          }
         }
       @Override

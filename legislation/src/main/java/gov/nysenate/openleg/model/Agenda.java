@@ -89,18 +89,16 @@ public class Agenda extends BaseObject
     }
 
     @Override
-   
-    
+
        /**
        * Comments about this field
        */
         public int value;
         public boolean equals (Object o) {
-          if (this.getClass () != o.getClass ()
-          )  { 
-             return false; }
+          if (o instanceof Agenda){ 
+             return true; }
          else {
-           return true; 
+           return false; 
          }
         }
       @Override

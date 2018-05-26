@@ -83,11 +83,10 @@ public class Section {
        */
         public int value;
         public boolean equals (Object o) {
-          if (this.getClass () != o.getClass ()
-          )  {  
-             return false; }
+          if (o instanceof Section){  
+             return true; }
          else {
-           return true; 
+           return false; 
          }
         }
       @Override
