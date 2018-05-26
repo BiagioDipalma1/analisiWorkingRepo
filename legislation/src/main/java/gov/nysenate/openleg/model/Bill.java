@@ -234,9 +234,9 @@ public class Bill extends BaseObject implements Comparable<Bill>
     /**
      * @param amendments - A list of additional billIds for the various other versions of this bill.
      */
-    public void addAmendments(List<String> amendments)
+    public void addAmendments(List<String> strAmendments)
     {
-        this.amendments.addAll(amendments);
+        this.amendments.addAll(strAmendments);
     }
 
     /**
