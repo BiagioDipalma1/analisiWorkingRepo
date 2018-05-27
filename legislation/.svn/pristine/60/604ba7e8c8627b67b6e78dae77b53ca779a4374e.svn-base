@@ -32,8 +32,6 @@ import org.codehaus.jackson.map.SerializationConfig.Feature;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.codehaus.jackson.util.DefaultPrettyPrinter;
-import gov.nysenate.openleg.api.servlets.converter.InvalidBaseObjException;
-
 // Richiede commento
 
 /**
@@ -104,7 +102,6 @@ public class Api2JsonConverter
 /** Comments about this class */
     public JsonNode makeNode(IBaseObject object) throws IOException
     {
-        try{
         if (object.getOtype().equals("bill")) {
             return makeNode((Bill)object);
         }
@@ -126,11 +123,6 @@ public class Api2JsonConverter
         else {
             throw new InvalidBaseObjException("Invalid base object otype: "+object.getOtype());
         }
-        }catch (InvalidBaseObjException e){
-            e.printStackTrace();
-        }
-        //this statement is never reached
-        return (JsonNode)object;
     }
 /** Comments about this class */
     private ArrayNode editArrayNode(ArrayNode arrayNode, Object item){

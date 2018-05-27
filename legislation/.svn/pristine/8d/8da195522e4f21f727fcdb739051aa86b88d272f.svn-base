@@ -76,7 +76,6 @@ public class Section {
     public void setCalendarEntries(List<CalendarEntry> calendarEntries) {
         this.calendarEntries = calendarEntries;
     }
-    
 /** Comments about this class */
     @Override
        /**

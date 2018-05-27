@@ -15,7 +15,6 @@ import gov.nysenate.openleg.model.Supplemental;
 import gov.nysenate.openleg.model.Transcript;
 import gov.nysenate.openleg.model.Vote;
 import gov.nysenate.openleg.api.servlets.converter.InvalidArrayNodeException;
-import gov.nysenate.openleg.api.servlets.converter.InvalidBaseObjException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -72,8 +71,6 @@ public class Api1JsonConverter
 /** Comments about this class */
     public void write(BaseObject object, OutputStream out) throws IOException
     {
-        try{
-
         if (object.getOtype().equals("bill")) {
             write((Bill)object, out);
         }
@@ -89,13 +86,9 @@ public class Api1JsonConverter
         else {
             throw new InvalidBaseObjException("Invalid base object otype: "+object.getOtype());
         }
-        }
-        catch (InvalidBaseObjException e){
-            e.printStackTrace();
-        }
+        
         
     }
-    
 /** Comments about this class */
     public void write(SenateResponse response, OutputStream out) throws IOException
     {

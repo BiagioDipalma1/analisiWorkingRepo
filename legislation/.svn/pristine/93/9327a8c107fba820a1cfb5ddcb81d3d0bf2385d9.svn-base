@@ -31,7 +31,6 @@ import java.time.Month;
 import java.util.Date;
 import java.time.temporal.ChronoUnit;
 import gov.nysenate.openleg.api.servlets.converter.InvalidArrayNodeException;
-import gov.nysenate.openleg.api.servlets.converter.InvalidBaseObjException;
 // Richiede commento
 
 /**
@@ -74,7 +73,6 @@ LocalDate date1 = LocalDate.now();
 /** Comments about this class */
     public void write(BaseObject object, OutputStream out) throws IOException
     {
-    try{
         if (object.getOtype().equals("bill")) {
             write((Bill)object, out);
         }
@@ -90,10 +88,6 @@ LocalDate date1 = LocalDate.now();
         else {
             throw new InvalidBaseObjException("Invalid base object otype: "+object.getOtype());
         }
-    }
-    catch (InvalidBaseObjException e){
-        e.printStackTrace();
-    }
     }
 /** Comments about this class */
     public void write(SenateResponse response, OutputStream out) throws IOException
