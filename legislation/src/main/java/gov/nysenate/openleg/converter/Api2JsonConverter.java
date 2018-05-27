@@ -102,9 +102,8 @@ public class Api2JsonConverter
         generator.close();
     }
 /** Comments about this class */
-    public JsonNode makeNode(IBaseObject object) throws IOException
+    public JsonNode makeNode(IBaseObject object) throws IOException, InvalidBaseObjException
     {
-        try{
         if (object.getOtype().equals("bill")) {
             return makeNode((Bill)object);
         }
@@ -126,9 +125,7 @@ public class Api2JsonConverter
         else {
             throw new InvalidBaseObjException("Invalid base object otype: "+object.getOtype());
         }
-        }catch (InvalidBaseObjException e){
-            e.printStackTrace();
-        }
+        
         //this statement is never reached
         return (JsonNode)object;
     }

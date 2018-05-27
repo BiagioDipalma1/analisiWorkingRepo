@@ -70,10 +70,8 @@ public class Api1JsonConverter
         return stream.toString(this.encoding);
     }
 /** Comments about this class */
-    public void write(BaseObject object, OutputStream out) throws IOException
+    public void write(BaseObject object, OutputStream out) throws IOException, InvalidBaseObjException
     {
-        try{
-
         if (object.getOtype().equals("bill")) {
             write((Bill)object, out);
         }
@@ -89,10 +87,7 @@ public class Api1JsonConverter
         else {
             throw new InvalidBaseObjException("Invalid base object otype: "+object.getOtype());
         }
-        }
-        catch (InvalidBaseObjException e){
-            e.printStackTrace();
-        }
+
         
     }
     
@@ -403,9 +398,8 @@ public class Api1JsonConverter
     return arrayNode;
 }
     /** Comments about this class */
-    private ArrayNode controlItem(Object item, ArrayNode arrayNode){
+    private ArrayNode controlItem(Object item, ArrayNode arrayNode) throws InvalidArrayNodeException{
     
-    try{
         if (Sequence.class.isInstance(item)) {
             arrayNode.add(makeNode((Sequence)item));
         }
@@ -421,11 +415,8 @@ public class Api1JsonConverter
         else {
             throw new InvalidArrayNodeException("Invalid array node type: "+item.getClass());
         }
-        
-    }
-    catch (InvalidArrayNodeException e){
-        e.printStackTrace();
-    }
+
+    
         return arrayNode;
     }
 }
