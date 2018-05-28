@@ -9,9 +9,9 @@ import java.lang.Exception;
  *
  * @author BiagioDipalma
  */
-
-public class InvalidArrayNodeException extends Exception{
-    InvalidArrayNodeException(String msg){
+public class NoMultiLineBlockException extends Exception
+{
+    NoMultiLineBlockException(String msg){
         super(msg);
     }
 }

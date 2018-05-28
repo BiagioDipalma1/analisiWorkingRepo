@@ -130,8 +130,8 @@ public class Api2JsonConverter
         return (JsonNode)object;
     }
 /** Comments about this class */
-    private ArrayNode editArrayNode(ArrayNode arrayNode, Object item)throws InvalidArrayNodeException{
-     
+    private ArrayNode editArrayNode(ArrayNode arrayNode, Object item){
+    try{    
         if (String.class.isInstance(item)) {
                 arrayNode.add((String)item);
             }
@@ -153,6 +153,10 @@ public class Api2JsonConverter
             else {
                 throw new InvalidArrayNodeException("Invalid array node type: "+item.getClass());
             }
+    }
+    catch(InvalidArrayNodeException e){
+        e.printStackTrace();
+    }
         return arrayNode;
     }
     /** Comments about this class */
