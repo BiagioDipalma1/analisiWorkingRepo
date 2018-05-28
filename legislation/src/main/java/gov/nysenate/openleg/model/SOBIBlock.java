@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
+ import old_qa_java.model.NoMultiLineBlockException;
 /**
  * The SOBIBlock class represents a set of SOBI lines sharing the same header:
  * <p>
@@ -134,7 +135,7 @@ public class SOBIBlock
      * @throws RuntimeException - when attempting to extend a block that shouldn't be extended. Use isMultiline
      * to check before extending.
      */
-    public void extend(String line) {
+    public void extend(String line) throws NoMultiLineBlockException{
         if (!this.isMultiline())
             throw new NoMultiLineBlockException("Only multi-line blocks may be extended");
         this.dataBuffer.append("\n"+line.substring(12));

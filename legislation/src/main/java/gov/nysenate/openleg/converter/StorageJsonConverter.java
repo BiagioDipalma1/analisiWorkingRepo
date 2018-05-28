@@ -14,6 +14,7 @@ import gov.nysenate.openleg.model.Supplemental;
 import gov.nysenate.openleg.model.Transcript;
 import gov.nysenate.openleg.model.Vote;
 import gov.nysenate.openleg.util.Storage;
+import gov.nysenate.openleg.api.servlets.converter.InvalidItemException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -521,7 +522,7 @@ public class StorageJsonConverter
         return list;
     }
     /** Comments about this class */
-    private List<Object> workOnList(Class<? extends Object> cls, Iterator<JsonNode> iter, List<Object> list){
+    private List<Object> workOnList(Class<? extends Object> cls, Iterator<JsonNode> iter, List<Object> list) throws InvalidItemException{
         
         
         if (cls == Addendum.class) {

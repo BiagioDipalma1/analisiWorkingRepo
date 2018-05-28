@@ -7,8 +7,9 @@ import gov.nysenate.openleg.api.servlets.converter.InvalidBaseObjException;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.*;
-import java.util.*;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.jdom2.CDATA;
@@ -17,8 +18,12 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.XMLOutputter;
 
-import java.time.*;
-
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Date;
+import java.time.temporal.ChronoUnit;
 // Richiede commento
 
 /**

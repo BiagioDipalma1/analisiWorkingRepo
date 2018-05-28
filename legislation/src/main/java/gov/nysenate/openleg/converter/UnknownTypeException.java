@@ -1,4 +1,4 @@
-import java.lang.RuntimeException;
+import java.lang.Exception;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,7 +9,7 @@ import java.lang.RuntimeException;
  *
  * @author BiagioDipalma
  */
-public class UnknownTypeException extends RuntimeException{
+public class UnknownTypeException extends Exception{
     UnknownTypeException(String msg){
         super(msg);
     }
