@@ -1,0 +1,213 @@
+package gov.nysenate.openleg.model;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Date;
+import java.time.temporal.ChronoUnit;
+
+/**
+ *
+ * @author GraylinKim
+ */
+public class Meeting extends BaseObject
+{
+    /**
+     * The date and time of the meeting.
+     */
+    protected Date meetingDateTime;
+
+    /**
+     * Day of the week; e.g. Wednesday.
+     */
+    protected String meetday = "";
+
+    /**
+     * The physical location of the meeting; e.g. 332 CAP.
+     */
+    protected String location = "";
+
+    /**
+     * The unique identifier for this object.
+     */
+    protected String oid;
+
+    /**
+     * The name of the committee that is meeting
+     */
+    protected String committeeName = "";
+
+    /**
+     * The full name of the chair of the committee
+     */
+    protected String committeeChair = "";
+
+    /**
+     * A list of bills on the agenda for the meeting
+     */
+    protected List<Bill> bills;
+
+    /**
+     * The notes for the meeting. Will often detail appointments to be made or experts to appear.
+     */
+    protected String notes = "";
+
+    /**
+     *
+     */
+    protected String addendum = "";
+
+    /**
+     * JavaBean Constructor
+     */
+    public Meeting() {
+        bills = new ArrayList<Bill>();
+    }
+
+    /**
+     *
+     * @param id
+     */
+    public Meeting(String committeeName, Date meetingDateTime) {
+        LocalDate date2;
+        date2 = LocalDate.now();
+        this.setCommitteeName(committeeName);
+        this.setMeetingDateTime(meetingDateTime);
+        this.oid  = date2.atTime(LocalTime.MIN)+"-"+committeeName;
+
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        calendar.setTime(meetingDateTime);
+        this.setSession(calendar.get(java.util.Calendar.YEAR));
+        this.setYear(calendar.get(java.util.Calendar.YEAR));
+
+        bills = new ArrayList<Bill>();
+    }
+
+    /**
+     * The object type of the meeting.
+     */
+    public String getOtype()
+    {
+        return "meeting";
+    }
+
+    /**
+     * @return - The object's id.
+     */
+    public String getOid()
+    {
+        return this.oid;
+    }
+
+    /**
+     * @param oid - The object's new oid
+     */
+    private void setOid(String oid)
+    {
+        this.oid = oid.replace(" ", "-").replace(",", "");
+    }
+
+    public String getCommitteeChair() {
+        return committeeChair;
+    }
+
+    public void setCommitteeChair(String committeeChair) {
+        this.committeeChair = committeeChair;
+    }
+
+    public int getYear() {
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        cal.setTime(this.getMeetingDateTime());
+        return cal.get(java.util.Calendar.YEAR);
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getMeetday() {
+        return meetday;
+    }
+
+    public void setMeetday(String meetday) {
+        this.meetday = meetday;
+    }
+
+
+    private Date getMeetingDateTime() {
+        return meetingDateTime;
+    }
+
+    private void setMeetingDateTime(Date meetingDateTime) {
+        this.meetingDateTime = meetingDateTime;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public List<Bill> getBills() {
+        return bills;
+    }
+
+    public void setBills(List<Bill> bills) {
+        this.bills = bills;
+    }
+
+    public String getCommitteeName() {
+        return committeeName;
+    }
+
+   private void setCommitteeName(String committeeName) {
+        this.committeeName = committeeName;
+    }
+
+    public String getAddendum() {
+        return addendum;
+    }
+
+    public void setAddendum(String addendum) {
+        this.addendum = addendum;
+    }
+
+    @Override
+    
+    
+        public int value;
+        public boolean equals (Object o) {
+          if (this.getClass () != o.getClass ()
+          )  { 
+             return false; }
+         else {
+           return true; 
+         }
+        }
+        if ( ((Meeting)obj).getOid().equals(this.getOid()))
+                return true;
+       
+    
+    
+    @Override
+    public int hashCode() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return this.oid + " : " + meetingDateTime.getTime();
+    }
+}

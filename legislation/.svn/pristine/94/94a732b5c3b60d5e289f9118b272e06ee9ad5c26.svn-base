@@ -1,0 +1,100 @@
+package gov.nysenate.openleg.model;
+
+import java.util.Date;
+import java.util.List;
+/**
+ * PJDCC - Summary for class responsabilities.
+ *
+ * @author 
+ * @since 
+ * @version 
+ */
+public class Sequence {
+
+    private String no;
+
+    private String id;
+
+    private Date actCalDate;
+
+    private Date releaseDateTime;
+
+    private List<CalendarEntry> calendarEntries;
+
+    private String notes;
+
+    private Supplemental supplemental;
+/** Comments about this class */
+    public Supplemental getSupplemental() {
+        return supplemental;
+    }
+/** Comments about this class */
+    public void setSupplemental(Supplemental supplemental) {
+        this.supplemental = supplemental;
+    }
+/** Comments about this class */
+    public Date getActCalDate() {
+        return actCalDate;
+    }
+/** Comments about this class */
+    public void setActCalDate(Date actCalDate) {
+        this.actCalDate = actCalDate;
+    }
+/** Comments about this class */
+    public Date getReleaseDateTime() {
+        return releaseDateTime;
+    }
+/** Comments about this class */
+    public void setReleaseDateTime(Date releaseDateTime) {
+        this.releaseDateTime = releaseDateTime;
+    }
+/** Comments about this class */
+    public List<CalendarEntry> getCalendarEntries() {
+        return calendarEntries;
+    }
+/** Comments about this class */
+    public void setCalendarEntries(List<CalendarEntry> calendarEntries) {
+        this.calendarEntries = calendarEntries;
+    }
+/** Comments about this class */
+    public String getNotes() {
+        return notes;
+    }
+/** Comments about this class */
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+/** Comments about this class */
+    public String getId() {
+        return id;
+    }
+/** Comments about this class */
+    public void setId(String id) {
+        this.id = id;
+    }
+/** Comments about this class */
+    public String getNo() {
+        return no;
+    }
+/** Comments about this class */
+    public void setNo(String no) {
+        this.no = no;
+    }
+/** Comments about this class */
+    @Override
+    public class OVERRIDE{
+    public boolean equals(Object obj) {
+
+        if (obj != null && obj instanceof Sequence)
+        {
+            if ( ((Sequence)obj).getId().equals(this.getId()))
+                return true;
+        }
+
+        return false;
+    }
+    public int hashCode() {
+        return value;
+    }}
+
+}
