@@ -112,7 +112,7 @@ public class LuceneJsonConverter
         }
         int  counter = 0;
         for(counter = 0; counter < fields.size(); counter++) {
-            if(controlField(fields.get(counter))) {
+            if(controlF(fields.get(counter))) {
                 String name = StringUtils.capitalize(fields.get(counter).getName());
                 String type = fields.get(counter).getType().getSimpleName();
                 Field value = String.class.getDeclaredField("value");
@@ -137,8 +137,9 @@ public class LuceneJsonConverter
         }
          return root;
     }
+    
     /** Comments about this class */
-    private static boolean controlField(Field f){
+    private static boolean controlF(Field f){
         boolean flag= false;
         if(!f.getName().contains("jdo") && !Modifier.isStatic(f.getModifiers())){
             flag = true;
