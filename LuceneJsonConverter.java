@@ -1,53 +1,24 @@
  package gov.nysenate.openleg.converter;
 
 
-import gov.nysenate.openleg.model.Action;
-import gov.nysenate.openleg.model.Addendum;
-import gov.nysenate.openleg.model.BaseObject;
-import gov.nysenate.openleg.model.Bill;
-import gov.nysenate.openleg.model.Calendar;
-import gov.nysenate.openleg.model.CalendarEntry;
-import gov.nysenate.openleg.model.Meeting;
-import gov.nysenate.openleg.model.Person;
-import gov.nysenate.openleg.model.Section;
-import gov.nysenate.openleg.model.Sequence;
-import gov.nysenate.openleg.model.Supplemental;
-import gov.nysenate.openleg.model.Transcript;
-import gov.nysenate.openleg.model.Vote;
+import gov.nysenate.openleg.model.*;
+ import gov.nysenate.openleg.api.servlets.converter.NotConvertException;
+
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.text.*;
+import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.google.gson.JsonArray;
+import com.google.gson.JsonArray; 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.Date;
-import java.time.temporal.ChronoUnit;
+
+import java.time.*;
 // Richiede commento
 
 /**
@@ -67,7 +38,7 @@ public class LuceneJsonConverter
     protected static HashMap<String,JsonObject> cachedSimpleBills = new HashMap<String,JsonObject>();
     LocalDateTime date2= LocalDateTime.now();
 /** Comments about this class */
-    private JsonObject editNode(JsonObject node, BaseObject o){
+    private JsonObject editNode(JsonObject node, BaseObject o)throws NotConvertException{
         
         if(o instanceof Bill) {
             cachedSimpleBills.remove(((Bill)o).getBillId());
@@ -128,7 +99,7 @@ public class LuceneJsonConverter
      */
     private static JsonObject converter(Object o, List<String> exclude) throws Exception
     {
-        List<Field> fields = new ArrayList<Field>();
+        List<Field> fields = new ArrayList<>();
         Class<?> cls = o.getClass();
         while (cls != null) {
             fields.addAll(Arrays.asList(cls.getDeclaredFields()));
@@ -139,26 +110,26 @@ public class LuceneJsonConverter
         if(exclude == null) {
             exclude = new ArrayList<String>();
         }
-
-        for(Field f:fields) {
-            if(controlField(f)) {
-                String name = StringUtils.capitalize(f.getName());
-                String type = f.getType().getSimpleName();
+        int  counter = 0;
+        for(counter = 0; counter < fields.size(); counter++) {
+            if(controlField(fields.get(counter))) {
+                String name = StringUtils.capitalize(fields.get(counter).getName());
+                String type = fields.get(counter).getType().getSimpleName();
                 Field value = String.class.getDeclaredField("value");
-                if(!exclude.contains(f.getName())) {
+                if(!exclude.contains(fields.get(counter).getName())) {
                 value.setAccessible(false);
-                Object obj = f.get(o);
-                f.setAccessible(false);
+                Object obj = fields.get(counter).get(o);
+                fields.get(counter).setAccessible(false);
 
                 if(obj == null) {
-                    root.add(f.getName(), null);
+                    root.add(fields.get(counter).getName(), null);
                 }
                 else {
                     if(isPrimitive(obj)) {
-                        root.addProperty(f.getName(), obj.toString());
+                        root.addProperty(fields.get(counter).getName(), obj.toString());
                     }
                     else{
-                        root = workOnRoot(root,obj,type,f,o,name);
+                        root = workOnRoot(root,obj,type,fields.get(counter),o,name);
                     }
                 }
                 }
@@ -265,24 +236,7 @@ public class LuceneJsonConverter
                 || obj instanceof String);
     }
 
-    
-    /** Comments about this class */
-    private JsonArray editListBill(JsonArray jarray, Object o, Collection<?> c){
-        
-        Collection<Person> coll =c;
-        Collection<Vote> coll1 = c;
-        if(o instanceof Person) {
-            for(Person p: coll) {
-                jarray.add(converter(p, null));
-            }
-        }
-        else if(o instanceof Vote) {
-            for(Vote v: coll1) {
-                jarray.add((converter(v, internal_vote_exclude())));
-            }
-        }
-        return jarray;
-    }
+
 
 
 /** Comments about this class */
@@ -291,11 +245,6 @@ public class LuceneJsonConverter
         return Arrays.asList("addendums");
     }
 
-/** Comments about this class */
-    private static List<String> internal_vote_exclude()
-    {
-        return Arrays.asList("bill");
-    }
 
 /** Comments about this class */
     private static List<String> internal_bill_exclude()
