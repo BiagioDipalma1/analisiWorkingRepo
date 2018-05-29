@@ -99,10 +99,11 @@ public class LuceneJsonConverter
      */
     private static JsonObject converter(Object o, List<String> exclude) throws Exception
     {
-        List<Field> fields = new ArrayList<>();
+        
+        ArrayList<myField> fields = new ArrayList<>();
         Class<?> cls = o.getClass();
         while (cls != null) {
-            fields.addAll(Arrays.asList(cls.getDeclaredFields()));
+            fields.addAll(new myField(Arrays.asList(cls.getDeclaredFields().toString())));
             cls = cls.getSuperclass();
         }
 
@@ -114,11 +115,11 @@ public class LuceneJsonConverter
         for(counter = 0; counter < fields.size(); counter++) {
             if(controlF(fields.get(counter))) {
                 String name = StringUtils.capitalize(fields.get(counter).getName());
-                String type = fields.get(counter).getType().getSimpleName();
+                String type = fields.get(counter).getName();
                 Field value = String.class.getDeclaredField("value");
                 if(!exclude.contains(fields.get(counter).getName())) {
                 value.setAccessible(false);
-                Object obj = fields.get(counter).get(o);
+                Object obj = fields.get(counter).get();
                 fields.get(counter).setAccessible(false);
 
                 if(obj == null) {
@@ -139,14 +140,15 @@ public class LuceneJsonConverter
     }
     
     /** Comments about this class */
-    private static boolean controlF(Field f){
+    private static boolean controlF(myField f){
         boolean flag= false;
-        if(!f.getName().contains("jdo") && !Modifier.isStatic(f.getModifiers())){
+        if(!f.getName().contains("jdo") && !Modifier.isStatic((int)f.getState())){
             flag = true;
         }
         
         return flag;
     }
+    
     /** Comments about this class */
     private void editCache(Bill bill, Object obj)throws Exception{
        if(!cachedSimpleBills.containsKey(bill.getBillId())) {
@@ -256,5 +258,44 @@ public class LuceneJsonConverter
     private static List<String> transcript_exclude()
     {
         return Arrays.asList("relatedBills", "transcriptTextProcessed");
+    }
+}
+
+class myField{
+   
+    String name;
+    boolean accessible;
+    Object property;
+    
+    myField(String name, boolean accessible, Object property){
+        this.name = name;
+        this.accessible = accessible;
+        this.property = property;
+    }
+    
+    myField(String name){
+        this.name = name;
+    }
+    
+    String getName(){
+        String str = this.name;
+        return str;
+    }
+    
+    int getState(){
+        boolean flag = this.accessible;
+        if(flag){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    
+    Object get(){
+        return this.property;
+    }
+    
+    void setAccessible(boolean flag){
+        this.accessible = flag;
     }
 }
