@@ -116,7 +116,7 @@ public class LuceneJsonConverter
             if(controlF(fields.get(counter))) {
                 String name = StringUtils.capitalize(fields.get(counter).getName());
                 String type = fields.get(counter).getName();
-                Field value = String.class.getDeclaredField("value");
+                myField value = new myField(String.class.getDeclaredField("value").getName());
                 if(!exclude.contains(fields.get(counter).getName())) {
                 value.setAccessible(false);
                 Object obj = fields.get(counter).get();
@@ -156,7 +156,7 @@ public class LuceneJsonConverter
         } 
     }
     /** Comments about this class */
-    private static JsonObject workOnRoot(JsonObject root, Object obj, String type, Field f, Object o, String name){
+    private static JsonObject workOnRoot(JsonObject root, Object obj, String type, myField f, Object o, String name){
         
         try{
         if(type.equals("Bill")) {
