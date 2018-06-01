@@ -149,7 +149,6 @@ public class LuceneJsonConverter
         return flag;
     }
     
-    
     /** Comments about this class */
     private void editCache(Bill bill, Object obj)throws Exception{
        if(!cachedSimpleBills.containsKey(bill.getBillId())) {
