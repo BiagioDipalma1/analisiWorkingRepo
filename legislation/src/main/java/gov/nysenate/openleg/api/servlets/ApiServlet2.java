@@ -39,10 +39,7 @@ public class ApiServlet2 extends HttpServlet
        * Comments about this field
        */
     public static int MAX_PAGE_SIZE = 1000;
-    /**
-       * Comments about this field
-       */
-    public final Logger logger = Logger.getLogger(ApiServlet2.class);
+
     /**
        * Comments about this field
        */
@@ -116,6 +113,7 @@ public class ApiServlet2 extends HttpServlet
         String pageIdxParam = request.getParameter("pageIdx");
         String pageSizeParam = request.getParameter("pageSize");
         String sortOrderParam = request.getParameter("sortOrder");
+        Logger logger = Logger.getLogger(ApiServlet2.class);
 
         try {
             
@@ -155,6 +153,7 @@ public class ApiServlet2 extends HttpServlet
 /** Comments about this class */
     private void doSearch(HttpServletRequest request, HttpServletResponse response, String format, String term, int pageNumber, int pageSize, String sort, boolean sortOrder) throws ApiRequestException
     {
+        Logger logger = Logger.getLogger(ApiServlet2.class);
         try {
             int start = (pageNumber-1) * pageSize;
             SenateResponse sr = Application.getLucene().search(term, start, pageSize, sort, sortOrder);
@@ -189,6 +188,7 @@ public class ApiServlet2 extends HttpServlet
      /** Comments about this class */
     private void doSingleView(HttpServletRequest request, HttpServletResponse response, String format, String type, String id) throws ApiRequestException
     {
+        Logger logger = Logger.getLogger(ApiServlet2.class);
         try {
             SenateResponse sr = Application.getLucene().search("otype:"+type+" AND oid:\""+id+"\"", 0, 1, null, false);
             ApiHelper.buildSearchResultList(sr);

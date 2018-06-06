@@ -46,10 +46,8 @@ public class ApiServlet1 extends HttpServlet
        * Comments about this field
        */
     public static int DEFAULT_PAGE_SIZE = 20;
-/**
-       * Comments about this field
-       */
-    public final Logger logger = Logger.getLogger(ApiServlet1.class);
+
+    
     /**
        * Comments about this field
        */
@@ -92,6 +90,7 @@ public class ApiServlet1 extends HttpServlet
         String pageIdxParam = request.getParameter("pageIdx");
         String pageSizeParam = request.getParameter("pageSize");
         String sortOrderParam = request.getParameter("sortOrder");
+        Logger logger = Logger.getLogger(ApiServlet1.class);
 
         try {
             
@@ -191,6 +190,7 @@ public class ApiServlet1 extends HttpServlet
         term = Bill.formatBillNo(term);
 
         term = editTerm(term);
+        Logger logger = Logger.getLogger(ApiServlet1.class);
         
 
         try {
@@ -245,6 +245,7 @@ public class ApiServlet1 extends HttpServlet
     private void doSingleView(HttpServletRequest request, HttpServletResponse response, String format, String type, String id) throws ApiRequestException, IOException, ServletException
     {
         BaseObject object = (BaseObject)Application.getLucene().getSenateObject(id, type);
+        Logger logger = Logger.getLogger(ApiServlet1.class);
 
         if(object == null) {
             throw new ApiRequestException(TextFormatter.append("couldn't find id: ", id, " of type: ", type));

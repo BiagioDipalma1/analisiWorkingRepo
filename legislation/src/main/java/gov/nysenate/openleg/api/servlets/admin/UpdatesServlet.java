@@ -63,22 +63,12 @@ public class UpdatesServlet extends HttpServlet
 
     private static final Logger logger = Logger.getLogger(UpdatesServlet.class);
 
-    LocalDate date1 = LocalDate.now();
-    LocalDateTime date2= LocalDateTime.now();
+    //ho eliminato date1 e date2 in quanto non vi sono accessi e utilizzi di queste risorse
     
-    
-
-    private final QueryRunner runner;
-
-    private final ResultSetHandler<ArrayList<Change>> handler;
-
-    private final List<String> otypes = Arrays.asList("bill","calendar","meeting","agenda");
 
     public UpdatesServlet()
     {
         super();
-        handler = new ChangeHandler();
-        runner = new QueryRunner(Application.getDB().getDataSource());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -104,6 +94,7 @@ public class UpdatesServlet extends HttpServlet
         String otype = getSafe(request, "otype", "");
         String oid = getSafe(request, "oid", "");
 
+        List<String> otypes = Arrays.asList("bill","calendar","meeting","agenda");
         Date startDate = null;
         Date endDate = null;
 
@@ -160,7 +151,9 @@ public class UpdatesServlet extends HttpServlet
      */
     public List<Change> getHistory(Date start, Date end, String otype, String oid) throws SQLException
     {
+        QueryRunner runner = new QueryRunner(Application.getDB().getDataSource());
 
+        ResultSetHandler<ArrayList<Change>> handler;
         String query = "SELECT * FROM changelog WHERE 1=1";
         List<Object> params = new ArrayList<Object>();
 
